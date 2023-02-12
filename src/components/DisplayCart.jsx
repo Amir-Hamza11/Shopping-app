@@ -1,59 +1,53 @@
-import React, { useState } from 'react'
-import { Panel, IconButton } from 'rsuite'
+import React from 'react'
+import { Panel, IconButton, Tag } from 'rsuite'
 import { Trash, Plus, Minus } from '@rsuite/icons';
 
-const DisplayCart = ({ id, name, price, currency, img, deleteProduct, decrQuantity, incrQuantity }) => {
+const DisplayCart = ({ id, name, price, currency, img, deleteProduct, onPlusClick, onMinusClick, quantity }) => {
 
-  const [quantity, setQuantity] = useState(1)
-
-  const onDeleteClick = () =>{
+  const onDeleteClick = () => {
     deleteProduct(id)
   }
 
-  const plusClick = ()=>{
-    if(quantity < 10){
-      setQuantity(quantity + 1)
-    }
-    incrQuantity(price, quantity)
-
+  const plusClick = () => {
+    onPlusClick(id)
   }
 
-  const minusClick = ()=>{
-    if(quantity !== 1){
-      setQuantity(p => p-1)
-
-    }
-    decrQuantity(price, quantity)
+  const minusClick = () => {
+    onMinusClick(id)
   }
+
 
   return (
-    <Panel shaded bordered bodyFill style={{ display: 'flex' }}>
+    <Panel shaded bordered bodyFill style={{ display: 'block' }}>
       <img src={img} height="150" width="240" style={{ objectFit: 'scale-down' }} alt='product' />
 
       <div style={{ display: 'inline-block' }} >
 
-        <Panel header={name} >
+        <Panel >
+          <h6 className='text-center' >{name}</h6>
           <div>
-            <small className=' font-bolder' >{`Price: `}</small>
-            <small className='text-green' >{`${price} ${currency}`}</small>
+            <span className=' font-bolder' >{`Price: `}</span>
+            <span className='text-green' >{`${price} ${currency}`}</span>
           </div>
           <div>
             <IconButton
               onClick={onDeleteClick}
               color="red"
+              size='sm'
               appearance="primary"
               icon={<Trash />}
-            >
-              Remove
-            </IconButton>
-
-            <IconButton icon={<Plus/>} onClick={plusClick} >
-              
-            </IconButton>
-            {quantity}
-            <IconButton  icon={<Minus/>} onClick={minusClick} >
-
-            </IconButton>
+            />
+            <div className='ml-3' style={{ display: 'inline-block' }}>
+              <p className='font-bolder mb-3' >Quantity:</p>
+              <IconButton size="md" icon={<Plus />} onClick={plusClick} />
+              {quantity}
+              <IconButton size="md" icon={<Minus />} onClick={minusClick} />
+            </div>
+            
+            <div className='ml-3' style={{ display: 'inline-block' }}>
+              <p className='font-bolder mb-3' >Sub Total:</p>
+              <Tag size="lg" color='cyan' >{`${quantity * price} USD`}</Tag>
+            </div>
           </div>
         </Panel>
 
