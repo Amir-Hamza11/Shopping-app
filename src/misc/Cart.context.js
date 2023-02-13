@@ -1,33 +1,60 @@
-import { createContext, useContext, useState } from 'react'
-// import { useCartProducts } from './Custom-hook';
-// import { useProducts } from './Product.context';
-
-const CartContext = createContext()
+import { useEffect, useReducer, createContext, useContext } from "react";
+const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
-    const [cartData, setCartData] = useState([]);
 
-    // const products = useProducts()
-    // const persisted = localStorage.getItem('items')
-    // const cartProducts = JSON.parse(persisted)
+    function productReducer(prevState, action) {
+        switch (action.type) {
+            case 'ADD': {
+                return [...prevState, action.productId]
+            }
+            case 'REMOVE': {
+                return prevState.filter((pid) => pid !== action.productId)
+            }
+            case 'SUBTRACT': {
+                const newArr = [...prevState]
+                const index = newArr.indexOf(action.productId)
+                newArr.splice(index, 1)
+                return newArr
+            }
+            default:
+                return prevState;
+        }
+    }
 
-    // const update = ()=>{
+    function usePersistedReducer(reducer, initialState, key) {
+        const [state, dispatch] = useReducer(reducer, initialState, (initial) => {
+            const persisted = localStorage.getItem(key)
 
-    //     const subTotals = products.filter((item) =>
-    //     cartProducts.includes(item.id)).map(({ id, price }) => {
-    //       const count = cartProducts.filter(x => x === id).length;
-    //       const subTotal = count * price;
-    //       return subTotal;
-    //     })
+            return persisted ? JSON.parse(persisted) : initial;
+        })
+
+        useEffect(() => {
+            localStorage.setItem(key, JSON.stringify(state))
+        }, [state, key])
+
+        return [state, dispatch]
+    }
+
+    const useCartProducts = (key = 'items') => {
+      return  usePersistedReducer(productReducer, [], key)
+    }
+
+    const [cartProducts, dispatch] = useCartProducts()
+
+    const deleteProduct1 = (pId) => {
+        dispatch({ type: 'REMOVE', productId: pId })
+      }
     
-    //   const TOTAL_AMOUNT = subTotals.reduce((total, num) => total + num, 0);
-    //   const COUNT = cartProducts.length;
-
-    //     setCartData([TOTAL_AMOUNT, COUNT])
-    // }
+      const onMinusClick1 = (pId) => {
+        dispatch({ type: 'SUBTRACT', productId: pId })
+      }
+      const onPlusClick1 = (pId) => {
+        dispatch({ type: 'ADD', productId: pId })
+      }
 
     return (
-        <CartContext.Provider value={[cartData, setCartData]}>
+        <CartContext.Provider value={{deleteProduct1, onMinusClick1, onPlusClick1, cartProducts  }}>
             {children}
         </CartContext.Provider>
     )

@@ -5,9 +5,8 @@ import DisplayCategory from '../components/DisplayCategory';
 import { Col, Panel } from 'rsuite';
 
 const Home = () => {
-
   return (
-    <MainPageLayout>
+    <MainPageLayout >
       <Col sm={24} md={24} lg={24} >
         <Panel>
           {

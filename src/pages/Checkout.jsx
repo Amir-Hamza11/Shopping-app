@@ -1,48 +1,34 @@
 import React from 'react'
-import { useEffect } from 'react'
 import { Col, Panel, Row, Tag } from 'rsuite'
 import DisplayCart from '../components/DisplayCart'
 import MainPageLayout from '../components/MainPageLayout'
 import { useCart } from '../misc/Cart.context'
-import { useCartProducts } from '../misc/Custom-hook'
 import { useProducts } from '../misc/Product.context'
 
 const Checkout = () => {
 
   const products = useProducts()
-  const [cartData, setCartData] = useCart()
-  const [cartProducts, dispatch] = useCartProducts()
+  const { deleteProduct1, onMinusClick1, onPlusClick1, cartProducts } = useCart()
 
   const deleteProduct = (pId) => {
-    dispatch({ type: 'REMOVE', productId: pId })
+    deleteProduct1(pId)
   }
 
   const onMinusClick = (pId) => {
-    dispatch({ type: 'SUBTRACT', productId: pId })
+    onMinusClick1(pId)
   }
   const onPlusClick = (pId) => {
-    dispatch({ type: 'ADD', productId: pId })
+    onPlusClick1(pId)
   }
-
 
   const subTotals = products.filter((item) =>
     cartProducts.includes(item.id)).map(({ id, price }) => {
       const count = cartProducts.filter(x => x === id).length;
       const subTotal = count * price;
       return subTotal;
-    })
+    });
 
   const TOTAL_AMOUNT = subTotals.reduce((total, num) => total + num, 0);
-  const COUNT = cartProducts.length;
-
-  useEffect(() => {
-    setCartData([TOTAL_AMOUNT, COUNT])
-
-  }, [COUNT, TOTAL_AMOUNT, setCartData])
-
-  // useEffect(()=>{
-  //   update()
-  // },[update])
 
   return (
     <MainPageLayout>

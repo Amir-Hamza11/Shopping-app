@@ -5,14 +5,14 @@ import { BsCart4 } from 'react-icons/bs';
 import { Icon } from '@rsuite/icons';
 import { useNavigate } from "react-router-dom";
 import { useCart } from '../misc/Cart.context';
+import { useProducts } from '../misc/Product.context';
 
 
 const Navigation = () => {
   const nevigate = useNavigate()
-  const [cartData] = useCart()
- 
-  console.log('test',cartData)
-  const [TOTAL_AMOUNT, COUNT] = cartData;
+  const { cartProducts } = useCart()
+  const products = useProducts()
+
 
   const navigateHome = () => {
     return nevigate("/")
@@ -21,6 +21,16 @@ const Navigation = () => {
   const navigateCart = () => {
     return nevigate("/checkout")
   }
+
+  const subTotals = products.filter((item) =>
+    cartProducts.includes(item.id)).map(({ id, price }) => {
+      const count = cartProducts.filter(x => x === id).length;
+      const subTotal = count * price;
+      return subTotal;
+    })
+
+  const TOTAL_AMOUNT = subTotals.reduce((total, num) => total + num, 0);
+  const COUNT = cartProducts.length;
 
   return (
     <Navbar>

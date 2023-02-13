@@ -3,7 +3,8 @@ import { useParams } from 'react-router'
 import { Checkbox, Col, FlexboxGrid, Panel } from 'rsuite'
 import DisplayProducts from '../components/DisplayProducts'
 import MainPageLayout from '../components/MainPageLayout'
-import { useCartProducts } from '../misc/Custom-hook'
+import { useCart } from '../misc/Cart.context'
+// import { useCartProducts } from '../misc/Custom-hook'
 import { useProducts } from '../misc/Product.context'
 
 
@@ -25,7 +26,8 @@ const Category = () => {
 
     const products = useProducts()
     const { id } = useParams();
-    const [cartProducts, dispatch] = useCartProducts()
+    // const [cartProducts, dispatch] = useCartProducts()
+    const {deleteProduct1, onPlusClick1, cartProducts} = useCart()
 
     const categoryProducts = products.filter((item) => item.categoryId === id)
 
@@ -53,10 +55,12 @@ const Category = () => {
         const isProductExist = cartProducts.includes(ProductId)
 
         if (isProductExist) {
-            dispatch({ type: 'REMOVE', productId: ProductId })
+            // dispatch({ type: 'REMOVE', productId: ProductId })
+            deleteProduct1(ProductId)
         }
         else {
-            dispatch({ type: 'ADD', productId: ProductId })
+            // dispatch({ type: 'ADD', productId: ProductId })
+            onPlusClick1(ProductId)
         }
     }
 

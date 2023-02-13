@@ -10,8 +10,8 @@ import { CartProvider } from './misc/Cart.context';
 function App() {
   return (
     <ProductProvider>
-      <CartProvider>
-        <BrowserRouter >
+      <CartProvider >
+        <BrowserRouter>
           <Routes>
             <Route path='/' element={<Home />} />
 
