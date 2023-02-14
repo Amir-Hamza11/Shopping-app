@@ -8,14 +8,19 @@ const DisplayProducts = ({ id, name, price, currency, thumbnail, inStock, addPro
     const onAddClick = () => {
         addProduct(id)
         isProductExist = cartProducts.includes(id)
-
-        console.log(isProductExist)
     }
 
     return (
-        <Panel shaded bordered bodyFill style={{ display: 'inline-block', width: 240 }} className="ml-2" >
-            <img src={thumbnail} height="160" width="240" style={{ objectFit: 'scale-down' }} alt='Product' />
-            <Panel header={name}>
+        <Panel shaded bordered bodyFill
+            style={{ display: 'inline-block', width: 240 }}
+            className="ml-2 mb-2 "
+        >
+            <img src={thumbnail}
+                height="160" width="240"
+                style={{ objectFit: 'scale-down' }}
+                alt='Product' />
+
+            <Panel header={name} bordered className='ml-1 mr-1 mt-1 mb-1'>
                 <div>
                     <Tag>
                         <span className='text-black-70'  >
@@ -30,7 +35,10 @@ const DisplayProducts = ({ id, name, price, currency, thumbnail, inStock, addPro
                     </Tag>
                 </div>
                 <div className=' text-center mt-2' >
-                    <Button appearance='primary' disabled={!inStock} size="sm" color={`${isProductExist ? 'red' : 'blue'}`}
+                    <Button
+                        appearance='primary'
+                        disabled={!inStock} size="sm"
+                        color={`${isProductExist ? 'red' : 'blue'}`}
                         onClick={onAddClick}
                     >
                         {`${isProductExist ? 'Remove from cart' : 'Add to cart'}`}

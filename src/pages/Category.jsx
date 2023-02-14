@@ -3,10 +3,8 @@ import { useParams } from 'react-router'
 import { Checkbox, Col, FlexboxGrid, Panel } from 'rsuite'
 import DisplayProducts from '../components/DisplayProducts'
 import MainPageLayout from '../components/MainPageLayout'
-import { useCart } from '../misc/Cart.context'
-// import { useCartProducts } from '../misc/Custom-hook'
-import { useProducts } from '../misc/Product.context'
-
+import { useCart } from '../context/Cart.context'
+import { useProducts } from '../context/Product.context'
 
 function applyFilters(products, filters) {
     let result = [...products];
@@ -21,13 +19,11 @@ function applyFilters(products, filters) {
     return result;
 }
 
-
 const Category = () => {
 
     const products = useProducts()
     const { id } = useParams();
-    // const [cartProducts, dispatch] = useCartProducts()
-    const {deleteProduct1, onPlusClick1, cartProducts} = useCart()
+    const { deleteProduct1, onPlusClick1, cartProducts } = useCart()
 
     const categoryProducts = products.filter((item) => item.categoryId === id)
 
@@ -55,11 +51,9 @@ const Category = () => {
         const isProductExist = cartProducts.includes(ProductId)
 
         if (isProductExist) {
-            // dispatch({ type: 'REMOVE', productId: ProductId })
             deleteProduct1(ProductId)
         }
         else {
-            // dispatch({ type: 'ADD', productId: ProductId })
             onPlusClick1(ProductId)
         }
     }
@@ -67,14 +61,10 @@ const Category = () => {
     return (
         <MainPageLayout>
             <Col sm={4} md={4} lg={4}>
-                <Panel bordered shaded>
-                    <h5>Filters:</h5>
-                    <div>
+                <Panel bordered shaded className='mt-3'>
+                        <h6>Filters:</h6>
                         <Checkbox onChange={onDeliveryChange} > Delivery</Checkbox>
-                    </div>
-                    <div>
-                        <Checkbox value={filters.inStock} onChange={onStockChange} >InStock</Checkbox>
-                    </div>
+                        <Checkbox onChange={onStockChange} >InStock</Checkbox>
                 </Panel>
             </Col>
             <Col sm={20} md={20} lg={20}  >

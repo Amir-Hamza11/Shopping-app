@@ -2,8 +2,10 @@ import React from 'react'
 import { Col, Panel, Row, Tag } from 'rsuite'
 import DisplayCart from '../components/DisplayCart'
 import MainPageLayout from '../components/MainPageLayout'
-import { useCart } from '../misc/Cart.context'
-import { useProducts } from '../misc/Product.context'
+import { useCart } from '../context/Cart.context'
+import { useProducts } from '../context/Product.context'
+
+
 
 const Checkout = () => {
 
@@ -58,8 +60,8 @@ const Checkout = () => {
         </Col>
         <Col sm={4} md={4} lg={4} >
           {<Panel bordered shaded >
-            <p className='font-bolder' >Total Amount:</p>
-            <Tag><p className='text-green' >{`${TOTAL_AMOUNT} USD`}</p></Tag>
+            <p className='font-bolder' >Total</p>
+            <Tag color='green' >{`${TOTAL_AMOUNT} USD`}</Tag>
           </Panel>}
         </Col>
       </Row>

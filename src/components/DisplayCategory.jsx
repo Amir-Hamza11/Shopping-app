@@ -11,8 +11,8 @@ const DisplayCategory = ({ id, name, description }) => {
   }
 
   return (
-    <div className='padded' >
-      <Button block color="blue" appearance="ghost" onClick={onButtonClick} >
+    <div className='padded ' >
+      <Button block style={{}} color="green" appearance="primary"  onClick={onButtonClick} >
         <h3>{name}</h3>
         <p>{description}</p>
       </Button>

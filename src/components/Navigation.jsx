@@ -1,11 +1,11 @@
 import React from 'react'
-import { IconButton, Nav, Navbar, Tag } from 'rsuite';
+import { Badge, IconButton, Nav, Navbar, Tag } from 'rsuite';
 import HomeIcon from '@rsuite/icons/legacy/Home';
 import { BsCart4 } from 'react-icons/bs';
 import { Icon } from '@rsuite/icons';
 import { useNavigate } from "react-router-dom";
-import { useCart } from '../misc/Cart.context';
-import { useProducts } from '../misc/Product.context';
+import { useCart } from '../context/Cart.context';
+import { useProducts } from '../context/Product.context';
 
 
 const Navigation = () => {
@@ -33,12 +33,11 @@ const Navigation = () => {
   const COUNT = cartProducts.length;
 
   return (
-    <Navbar>
-      <Nav pullRight >
+    <Navbar >
         <IconButton icon={<HomeIcon />} onClick={navigateHome} />
-        <IconButton icon={<Icon as={BsCart4} size="1em" />} onClick={navigateCart} />
-        <Tag>{COUNT}</Tag>
-        <Tag>{`${TOTAL_AMOUNT} USD`}</Tag>
+      <Nav pullRight >
+        <Tag><p className='text-green' >{`${TOTAL_AMOUNT} USD`}</p></Tag>
+       <Badge content={COUNT} ><IconButton icon={<Icon as={BsCart4} size="1em" />} onClick={navigateCart} /></Badge> 
       </Nav>
     </Navbar>
   )

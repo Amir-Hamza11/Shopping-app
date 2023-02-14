@@ -8,7 +8,7 @@ const Home = () => {
   return (
     <MainPageLayout >
       <Col sm={24} md={24} lg={24} >
-        <Panel>
+        <Panel style={{display:'block'}} >
           {
             categories.map((item) => {
               return (

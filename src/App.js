@@ -4,8 +4,8 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
 import Category from './pages/Category';
 import Checkout from './pages/Checkout';
-import { ProductProvider } from './misc/Product.context';
-import { CartProvider } from './misc/Cart.context';
+import { CartProvider } from './context/Cart.context';
+import { ProductProvider } from './context/Product.context';
 
 function App() {
   return (
